@@ -1,7 +1,9 @@
 package com.huorehu.battlecity.display;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
 import javax.swing.JFrame;
 
@@ -18,7 +20,13 @@ public abstract class Display {
 
         window = new JFrame(title);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        content = new Canvas();
+        content = new Canvas() {
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                render(g);
+            }
+        };
 
         Dimension size = new Dimension(width, height);
         content.setPreferredSize(size);
@@ -28,6 +36,16 @@ public abstract class Display {
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+    }
+
+    public static void render() {
+        content.repaint();
+        content.setBackground(Color.blue);
+    }
+
+    private static void render(Graphics g) {
+        g.setColor(Color.GREEN);
+        g.fillOval(400 - 50, 300 - 50, 100, 25);
     }
 
 }
